@@ -1,0 +1,13 @@
+<div [id]="config.name" class="universal-field universal-field--input" [formGroup]="group" [style.font-family]="style.font | safe">
+  <label>{{ config.label }}</label>
+  <input [type]="config.inputType ? config.inputType : 'text'" [attr.placeholder]="config.placeholder" [formControlName]="config.name">
+  <div class="error">
+    <div class="universal-field__error custom-tooltip">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span class="tooltiptext">{{ config.error }}</span>
+    </div>
+    <div class="universal-field__ok">
+      <i class="fas fa-check-circle"></i>
+    </div>
+  </div>
+</div>

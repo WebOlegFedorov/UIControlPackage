@@ -1,0 +1,15 @@
+<ng-template #template>
+  <form class="universal-form" [formGroup]="form">
+    <ng-container *ngFor="let field of config;" appDynamicField [config]="field" [group]="form"></ng-container>
+  </form>
+</ng-template>
+
+<ng-template [ngIf]="modal">
+  <app-modal [modalSettings]="modal.settings" [modalActions]="modal.methods" [data]="form">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </app-modal>
+</ng-template>
+
+<ng-template [ngIf]="!modal">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</ng-template>

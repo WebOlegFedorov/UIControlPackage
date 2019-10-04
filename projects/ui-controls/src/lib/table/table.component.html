@@ -1,0 +1,128 @@
+<ng-template #template>
+  <ng-template [ngIf]="!waiting">
+    <ng-template [ngIf]="data">
+      <ng-template [ngIf]="data.length">
+        <div class="universal-table" [style.font-family]="style.font | safe">
+          <div class="universal-table__header" [ngClass]="{ 'universal-table__header--drag-mode' : options.dragName}" >
+            <!--Make column-->
+            <div [class]="controlMethods.length ? 'column-' + (+options['params'].length + 1) : 'column-' + options['params'].length"
+                 *ngFor="let option of options['params']">
+              {{ option['title'] }}
+            </div>
+            <!--Check actions column-->
+            <div [class]="'column-' + (+options['params'].length + 1) + ' universal-table__actions--right'"
+                 *ngIf="controlMethods.length">
+              Actions
+            </div>
+          </div>
+          <ng-template #dragTemplate>
+            <div class="universal-table__router-params" *ngFor="let item of data; let index = index"
+                 [ngClass]="{'universal-table__router-params--hover': options?.link}">
+              <div class="universal-table__move-container" *ngIf="options.dragName">
+                <i class="fas fa-arrows-alt"></i>
+              </div>
+              <div class="universal-table__main-row-container"
+                   [ngClass]="{'universal-table__main-row-container--full-width': !options.dragName}">
+                <!-- If link property is exists then Router link is active -->
+                <ng-template [ngIf]="options.link">
+                  <div [class]="controlMethods.length ? 'column-' + (+options['params'].length + 1) : 'column-' + options['params'].length"
+                       (click)="routerLink(options.link.route + item[options.link.param])"
+                       *ngFor="let option of options['params']">
+                    <span *ngIf="!option?.edit" [style.font-size.px]="17" [style.font-family]="style.font | safe">
+                      {{ item[option['property']] }}
+                    </span>
+                    <input *ngIf="option?.edit" appAutoWidth [(ngModel)]="item[option['property']]"
+                           [input]="item[option['property']]" type="text" title="modal-title" [style.font-size.px]="17"
+                           [style.font-family]="style.font | safe" class="universal-table__edit-input"
+                           (blur)="events('change_item_cell', {data: item, index: index})">
+                    <i *ngIf="option?.edit" class="fas fa-pencil-alt universal-table__pencil" (click)="focus($event)"></i>
+                  </div>
+                </ng-template>
+                <ng-template [ngIf]="!options.link">
+                  <div [class]="controlMethods.length ? 'column-' + (+options['params'].length + 1) : 'column-' + options['params'].length"
+                       *ngFor="let option of options['params']">
+                    <span *ngIf="!option?.edit" [style.font-size.px]="17" [style.font-family]="style.font | safe">
+                      {{ item[option['property']] }}
+                    </span>
+                    <input *ngIf="option?.edit" appAutoWidth [(ngModel)]="item[option['property']]"
+                           [input]="item[option['property']]" type="text" title="modal-title" [style.font-size.px]="17"
+                           [style.font-family]="style.font | safe" class="universal-table__edit-input"
+                           (blur)="events('change_item_cell', {data: item, index: index})">
+                    <i *ngIf="option?.edit" class="fas fa-pencil-alt universal-table__pencil" (click)="focus($event)"></i>
+                  </div>
+                </ng-template>
+                <!-- Each action methods -->
+                <div [class]="'column-' + (options['params'].length + 1) + ' universal-table__item-actions--right'"
+                     *ngIf="controlMethods?.length">
+                  <!-- Show link with Method or Modal object -->
+                  <ng-template ngFor [ngForOf]="controlMethods" let-mtd let-j="index">
+                    <!-- Show dynamic or static actions icon -->
+                    <ng-template [ngIf]="mtd?.switchIcon && mtd?.function">
+                      <ng-template ngFor [ngForOf]="mtd.switchIcon.params" let-icon>
+                        <button *ngIf="item[mtd.switchIcon.from] === icon.key"
+                                (click)="mtd.function(item, data, data.indexOf(item), mtd?.functionParams)"
+                                class="universal-table__action-button">
+                          <i [class]="icon.value"></i>
+                        </button>
+                      </ng-template>
+                    </ng-template>
+                    <!-- If we have an icon string -->
+                    <ng-template [ngIf]="mtd?.icon">
+                      <button *ngIf="mtd.function" class="universal-table__action-button"
+                              (click)="mtd.function(item, data, data.indexOf(item), mtd?.functionParams)">
+                        <i [class]="mtd.icon"></i>
+                      </button>
+                    </ng-template>
+                    <!-- If we have a switchModal property -->
+                    <button *ngIf="mtd.switchModal" class="universal-table__action-button"
+                       (click)="switchModal(mtd.switchModal)">
+                      <i [class]="mtd.icon"></i>
+                    </button>
+                  </ng-template>
+
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <!--Templates for drag&drop settings-->
+          <ng-template [ngIf]="!!options?.dragName">
+              <div class="universal-table__rows" [dragula]="options.dragName" [(dragulaModel)]="data">
+                <ng-container *ngTemplateOutlet="dragTemplate"></ng-container>
+              </div>
+          </ng-template>
+          <ng-template [ngIf]="!options?.dragName">
+            <div class="universal-table__rows">
+              <ng-container *ngTemplateOutlet="dragTemplate"></ng-container>
+            </div>
+          </ng-template>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="!data.length">
+        <h3 class="custom-empty-list">The list is empty</h3>
+      </ng-template>
+    </ng-template>
+    <ng-template [ngIf]="!data">
+      <h3 class="custom-empty-list">Please pass some data</h3>
+    </ng-template>
+  </ng-template>
+  <ng-template [ngIf]="waiting">
+    <div class="universal-preload">
+      <span class="universal-preload__loading">
+          <span class="universal-preload__outer-circle"></span>
+          <span class="universal-preload__inner-circle">
+              <span class="universal-preload__inner-center"></span>
+          </span>
+      </span>
+    </div>
+  </ng-template>
+</ng-template>
+
+<ng-template [ngIf]="modal">
+  <app-modal #modalRef [modalSettings]="modal.settings" [modalActions]="modal.methods" [data]="data">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </app-modal>
+</ng-template>
+
+<ng-template [ngIf]="!modal">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</ng-template>

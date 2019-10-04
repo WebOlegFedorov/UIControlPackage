@@ -1,0 +1,115 @@
+<ng-template [ngIf]="modalSettings?.showModal">
+  <div class="universal-modal" [style.font-family]="style.font | safe">
+    <div class="universal-modal__content"
+         [ngClass]="{'universal-modal__content--low': modalSettings.size === 'low', 'universal-modal__content--middle': modalSettings.size === 'middle', 'universal-modal__content--large': modalSettings.size === 'large'}">
+      <div class="universal-modal__header">
+        <h3 class="universal-modal__title">
+          <span *ngIf="!modalSettings?.editMode" [style.font-size.px]="22">{{ modalSettings?.title }}</span>
+          <ng-template [ngIf]="modalSettings?.editMode">
+            <input appAutoWidth [(ngModel)]="modalSettings.title" [input]="modalSettings.title" type="text"
+                   title="modal-title" #titleField [style.font-size.px]="22" [style.font-family]="style.font | safe"
+                   (blur)="events('change_description_modal', modalSettings.title)" >
+            <i class="fas fa-pencil-alt" (click)="focus(titleField)"></i>
+          </ng-template>
+        </h3>
+        <p *ngIf="modalSettings?.showDescription" class="universal-modal__description">
+          <span *ngIf="!modalSettings?.editMode" [style.font-size.px]="17">{{ modalSettings?.description }}</span>
+          <ng-template [ngIf]="modalSettings?.editMode">
+            <input appAutoWidth [(ngModel)]="modalSettings.description" [input]="modalSettings.description"
+                   type="text" title="modal-description" [style.font-size.px]="17" #descriptionField
+                   (blur)="events('change_description_modal', modalSettings.description)"
+                   [style.font-family]="style.font | safe">
+            <i class="fas fa-pencil-alt" (click)="focus(descriptionField)"></i>
+          </ng-template>
+        </p>
+        <div class="universal-modal__header-actions-container">
+          <div *ngIf="headerSettingsIcon" class="universal-modal__settings">
+            <i class="fas fa-cog" (click)="controlDropdown()"></i>
+            <ul class="universal-modal__dropdown" *ngIf="dropdownMode">
+              <ng-template ngFor [ngForOf]="modalActions" let-action>
+                <li *ngIf="action?.position === 'top' && action?.function" class="universal-modal__item"
+                    (click)="action.function(data, action.functionParams)">
+                  {{ action?.description }}
+                </li>
+                <li *ngIf="action?.position === 'top' && action?.switchModal" class="universal-modal__item"
+                    (click)="switchModal(action?.switchModal)">
+                  {{ action?.description }}
+                </li>
+              </ng-template>
+            </ul>
+          </div>
+          <div class="universal-modal__close" (click)="closeEmmit()">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+
+        <div class="universal-modal__loading" *ngIf="modalSettings?.waiting">
+          <div class="universal-modal__message">
+            {{ modalSettings?.waitingDescription }}
+          </div>
+          <div class="universal-modal__rotate">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+        </div>
+
+      </div>
+      <div class="universal-modal__body">
+        <ng-content></ng-content>
+      </div>
+      <div class="universal-modal__footer">
+        <div class="universal-modal__footer-left">
+
+          <ng-template ngFor [ngForOf]="modalActions" let-action>
+            <!--  Show button or select   -->
+            <ng-template [ngIf]="action.type === 'button' && action?.position === 'left'">
+              <button *ngIf="action?.function" class="universal-modal__button"
+                      [disabled]="!action?.active" (click)="action.function(data, action.functionParams)">
+                {{ action?.description }}
+              </button>
+              <button *ngIf="action?.switchModal" class="universal-modal__button"
+                      (click)="switchModal(action?.switchModal)" [disabled]="!action?.active">
+                {{ action?.description }}
+              </button>
+            </ng-template>
+            <ng-template [ngIf]="action.type === 'select' && action?.position === 'left'">
+              <select title="select" class="universal-modal__select" #select>
+                <option *ngFor="let option of action.selectData" [value]="option.value">
+                  {{ option.name }}
+                </option>
+              </select>
+              <button class="universal-modal__button" [disabled]="!action?.active"
+                      (click)="action.function(select.value)">
+                {{ action?.description }}
+              </button>
+            </ng-template>
+          </ng-template>
+        </div>
+        <div class="universal-modal__footer-right">
+          <ng-template ngFor [ngForOf]="modalActions" let-action>
+            <ng-template [ngIf]="action.type === 'button' && action?.position === 'right'">
+              <button *ngIf="action?.function" class="universal-modal__button"
+                      [disabled]="!action?.active" (click)="action.function(data, action.functionParams)">
+                {{ action?.description }}
+              </button>
+              <button *ngIf="action?.switchModal" class="universal-modal__button"
+                      (click)="switchModal(action?.switchModal)" [disabled]="!action?.active">
+                {{ action?.description }}
+              </button>
+            </ng-template>
+            <ng-template [ngIf]="action.type === 'select' && action?.position === 'right'">
+              <select title="select" class="universal-modal__select"  #select>
+                <option *ngFor="let option of action.selectData" [value]="option.value">
+                  {{ option.name }}
+                </option>
+              </select>
+              <button class="universal-modal__button" [disabled]="!action?.active"
+                      (click)="action.function(select.value)">Add</button>
+            </ng-template>
+          </ng-template>
+          <button class="universal-modal__button" (click)="closeEmmit()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

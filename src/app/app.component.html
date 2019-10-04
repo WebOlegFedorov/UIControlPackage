@@ -1,0 +1,12 @@
+<app-dynamic-form #dynamicForm [config]="form" [modal]="formModal"></app-dynamic-form>
+
+<app-table [options]="editFormOptions" [waiting]="false" [(data)]="table"
+           [controlMethods]="tableControlMethods" [modal]="editFormModal"></app-table>
+
+<app-modal [modalSettings]="justModal">Only modal</app-modal>
+
+
+
+<button (click)="openModal()">Open form in modal</button>
+<button (click)="openJustModal()">Clear modal</button>
+<button (click)="openTableModal()">Table in modal</button>

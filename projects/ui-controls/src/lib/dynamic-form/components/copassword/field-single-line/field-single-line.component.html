@@ -1,0 +1,18 @@
+<div class="universal-field universal-field--single-line" [formGroup]="group" [style.font-family]="style.font | safe">
+  <div class="universal-field__container">
+    <div class="universal-field__content">
+      <label>{{ config.label }}</label>
+      <input [type]="hide ? 'password' : config.inputType ? config.inputType : 'text'"
+             [attr.placeholder]="config.placeholder" [formControlName]="config.name" title="single-line"
+             autocomplete="off" #field (dblclick)="copy(field)">
+    </div>
+    <div class="universal-field__actions">
+      <button (click)="switchHideState()" *ngIf="config.inputType !== 'date'">
+        <i *ngIf="hide" class="far fa-eye"></i>
+        <i *ngIf="!hide" class="far fa-eye-slash"></i>
+        {{ config.inputType }}
+      </button>
+      <button (click)="copy(field)"><i class="far fa-copy"></i></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+.universal-field {
+  display: flex;
+  padding: 5px 0;
+  align-items: center;
+  label {
+    font-family: inherit;
+    font-size: 17px;
+    color: #6C7177;
+    width: 150px;
+    margin: 0;
+  }
+  textarea {
+    font-family: inherit;
+    border: 1px solid #CED4DA;
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 6px 7px;
+    min-height: 70px;
+    font-size: 17px;
+    color: #6C7177;
+  }
+
+  &__container {
+    font-family: inherit;
+    display: flex;
+    width: 100%;
+  }
+
+  &__content {
+    font-family: inherit;
+    display: flex;
+    width: calc(100% - 90px);
+  }
+
+  &__actions {
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 90px;
+    button {
+      background: transparent;
+      cursor: pointer;
+      font-size: 20px;
+      border: none;
+      outline: none;
+      i {
+        transition: .2s ease;
+        color: #737373;
+      }
+      &:hover {
+        i {
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+input.ng-touched.ng-invalid {
+  border: solid red 1px;
+}
+
+input.ng-touched.ng-valid {
+  border: solid green 1px;
+}

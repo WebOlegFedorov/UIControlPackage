@@ -1,0 +1,7 @@
+<div class="universal-field universal-field--checkbox" [formGroup]="group" [style.font-family]="style.font | safe">
+  <label>{{ config.label }}</label>
+  <div class="control universal-field__control">
+    <input class="control__input" [formControlName]="config.name" type="checkbox" title="checkbox">
+    <label class="control__label"></label>
+  </div>
+</div>

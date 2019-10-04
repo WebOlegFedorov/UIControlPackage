@@ -1,0 +1,143 @@
+@import "../assets/style";
+
+$columns: 12;
+$columnWidth: 100%;
+
+.universal-table {
+  color: #5b6166;
+
+  @for $i from 1 through $columns {
+    .column-#{$i} {
+      width: $columnWidth / $i;
+    }
+  }
+
+  &__actions {
+    font-family: inherit;
+    &--right {
+      text-align: right;
+    }
+  }
+
+  &__router-params {
+    font-family: inherit;
+    display: flex;
+    padding: 0 8px;
+    &:nth-child(odd) {
+      background: #D9E5FF;
+    }
+    &--hover:hover {
+      background: #bcc9eb;
+      cursor: pointer;
+    }
+  }
+
+  &__item-actions {
+    font-family: inherit;
+    &--right {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__header {
+    font-family: inherit;
+    display: flex;
+    padding: 12px 8px;
+    font-weight: bold;
+    font-size: 16px;
+    &--drag-mode {
+      width: calc(100% - 46px);
+      margin-left: 30px;
+    }
+  }
+
+  &__action-button {
+    font-family: inherit;
+    background: transparent;
+    transition: .2s ease;
+    margin-left: 5px;
+    cursor: pointer;
+    color: #5b6166;
+    outline: none;
+    border: none;
+    i {
+      font-size: 17px;
+    }
+    &:hover {
+      color: #000;
+    }
+  }
+
+  &__main-row-container {
+    font-family: inherit;
+    display: flex;
+    width: calc(100% - 30px);
+
+    @for $i from 1 through $columns {
+      .column-#{$i} {
+        width: $columnWidth / $i;
+      }
+    }
+
+    &--full-width {
+      width: 100% !important;
+    }
+    & > div {
+      padding: 12px 0;
+    }
+  }
+
+  &__move-container {
+    font-family: inherit;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    i {
+      cursor: pointer;
+    }
+  }
+
+  &__pencil {
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  &__edit-input {
+    border: none;
+    background: transparent;
+    color: #5b6166;
+  }
+}
+
+/* in-flight clone */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
+}
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
+}
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+.error {
+  display: none !important;
+}

@@ -1,0 +1,31 @@
+.universal-field {
+  align-items: center;
+  padding: 5px 0;
+  display: flex;
+  label {
+    font-family: inherit;
+    font-size: 17px;
+    color: #6C7177;
+    width: 150px;
+    margin: 0;
+  }
+  input {
+    font-family: inherit;
+    border: 1px solid #CED4DA;
+    width: calc(100% - 150px);
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 6px 7px;
+    font-size: 17px;
+    color: #6C7177;
+    height: 42px;
+  }
+}
+
+input.ng-touched.ng-invalid {
+  border: solid red 1px;
+}
+
+.error {
+  display: none;
+}

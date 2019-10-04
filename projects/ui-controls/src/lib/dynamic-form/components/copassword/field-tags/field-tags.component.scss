@@ -1,0 +1,82 @@
+.universal-field {
+  display: flex;
+  padding: 5px 0;
+  align-items: center;
+
+  label {
+    font-family: inherit;
+    font-size: 17px;
+    color: #6c7177;
+    width: 150px;
+    margin: 0;
+  }
+
+  &__container {
+    font-family: inherit;
+    display: flex;
+    min-height: 40px;
+    width: 100%;
+  }
+
+  &__content {
+    font-family: inherit;
+    display: flex;
+    width: calc(100% - 90px);
+  }
+
+  &__chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 150px);
+  }
+
+  &__chips-input {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #ced4da;
+    font-family: inherit;
+    font-size: 17px;
+  }
+
+  &__chips-item {
+    padding: 5px 20px 5px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    position: relative;
+    margin-right: 4px;
+    color: #6c7177;
+  }
+
+  &__remove-item {
+    position: absolute;
+    cursor: pointer;
+    right: 4px;
+    top: 0;
+  }
+
+  &__actions {
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 90px;
+    button {
+      background: transparent;
+      cursor: pointer;
+      font-size: 20px;
+      outline: none;
+      border: none;
+      i {
+        transition: .2s ease;
+        color: #737373;
+      }
+      &:hover {
+        i {
+          color: #000;
+        }
+      }
+    }
+  }
+}

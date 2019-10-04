@@ -1,0 +1,68 @@
+.universal-preload {
+  padding: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  &__loading {
+    display: block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  &__outer-circle {
+    display: block;
+    position: absolute;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    border-top: 7px solid #b5cbfa;
+    border-bottom: 7px solid #b5cbfa;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-radius: 80px;
+    box-shadow: 0 0 20px #D1DADE;
+    animation: cwSpin .666s linear .2s infinite;
+  }
+  &__inner-circle {
+    display: block;
+    position: absolute;
+    margin: 15px 0 0 15px;
+    width: 50px;
+    height: 50px;
+    border-top: 7px solid #b5cbfa;
+    border-bottom: 7px solid #b5cbfa;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-radius: 40px;
+    box-shadow: 0 0 20px #D1DADE;
+    animation: ccwSpin .555s linear .2s infinite;
+  }
+  &__inner-center {
+    display: block;
+    margin: 3px 0 0 3px;
+    width: 30px;
+    height: 30px;
+    background-color: #b5cbfa;
+    border-radius: 30px;
+  }
+}
+
+
+@keyframes cwSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes ccwSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
